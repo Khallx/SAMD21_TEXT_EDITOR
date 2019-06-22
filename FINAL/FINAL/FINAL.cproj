@@ -33,14 +33,14 @@
   <options>
     <option id="common.boards" value="Add" config="" content-id="Atmel.ASF" />
     <option id="common.services.basic.serial" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="common2.components.memory.sd_mmc" value="Add" config="spi" content-id="Atmel.ASF" />
     <option id="sam0.drivers.port" value="Add" config="" content-id="Atmel.ASF" />
     <option id="sam0.drivers.rtc" value="Add" config="calendar_callback" content-id="Atmel.ASF" />
     <option id="sam0.drivers.sercom.usart" value="Add" config="callback" content-id="Atmel.ASF" />
     <option id="sam0.drivers.system" value="Add" config="" content-id="Atmel.ASF" />
     <option id="sam0.utils.stdio.stdio_serial" value="Add" config="" content-id="Atmel.ASF" />
-    <option id="common.services.fs.fatfs" value="Add" config="" content-id="Atmel.ASF" />
     <option id="thirdparty.os.freertos.version" value="Add" config="10.0.0" content-id="Atmel.ASF" />
-    <option id="common2.components.memory.sd_mmc" value="Add" config="spi" content-id="Atmel.ASF" />
+    <option id="common.services.fs.fatfs" value="Add" config="" content-id="Atmel.ASF" />
     <option id="common.services.freertos.oled1_xpro_example" value="Add" config="" content-id="Atmel.ASF" />
     <option id="common.services.freertos.oled1_xpro_example.user_io" value="Add" config="" content-id="Atmel.ASF" />
     <option id="common.utils" value="Add" config="" content-id="Atmel.ASF" />
@@ -455,17 +455,17 @@
       <Value>../src/ASF/thirdparty/freertos/freertos-10.0.0/Source/portable/GCC/ARM_CM0</Value>
       <Value>../src</Value>
       <Value>../src/config</Value>
-      <Value>../src/ASF/common/services/storage/ctrl_access</Value>
       <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
-      <Value>../src/ASF/thirdparty/fatfs/fatfs-r0.09/src</Value>
       <Value>../src/ASF/common/services/serial</Value>
       <Value>../src/ASF/sam0/drivers/rtc</Value>
       <Value>../src/ASF/sam0/drivers/rtc/rtc_sam_d_r_h</Value>
-      <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
       <Value>../src/ASF/common2/components/memory/sd_mmc</Value>
       <Value>../src/ASF/common2/services/delay</Value>
       <Value>../src/ASF/common2/services/delay/sam0</Value>
       <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
+      <Value>../src/ASF/common/services/storage/ctrl_access</Value>
+      <Value>../src/ASF/thirdparty/fatfs/fatfs-r0.09/src</Value>
+      <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize for size (-Os)</armgcc.compiler.optimization.level>
@@ -518,17 +518,17 @@
       <Value>../src/ASF/thirdparty/freertos/freertos-10.0.0/Source/portable/GCC/ARM_CM0</Value>
       <Value>../src</Value>
       <Value>../src/config</Value>
-      <Value>../src/ASF/common/services/storage/ctrl_access</Value>
       <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
-      <Value>../src/ASF/thirdparty/fatfs/fatfs-r0.09/src</Value>
       <Value>../src/ASF/common/services/serial</Value>
       <Value>../src/ASF/sam0/drivers/rtc</Value>
       <Value>../src/ASF/sam0/drivers/rtc/rtc_sam_d_r_h</Value>
-      <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
       <Value>../src/ASF/common2/components/memory/sd_mmc</Value>
       <Value>../src/ASF/common2/services/delay</Value>
       <Value>../src/ASF/common2/services/delay/sam0</Value>
       <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
+      <Value>../src/ASF/common/services/storage/ctrl_access</Value>
+      <Value>../src/ASF/thirdparty/fatfs/fatfs-r0.09/src</Value>
+      <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
   <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DBOARD=SAMD21_XPLAINED_PRO -DGFX_MONO_LCD_HEIGHT=64 -DUSART_CALLBACK_MODE=true -D__FREERTOS__ -D__SAMD21J18A__ -DRTC_CALENDAR_ASYNC=true -DSYSTICK_MODE -DSPI_CALLBACK_MODE=true</armgcc.preprocessingassembler.general.AssemblerFlags>
@@ -563,17 +563,17 @@
       <Value>../src/ASF/thirdparty/freertos/freertos-10.0.0/Source/portable/GCC/ARM_CM0</Value>
       <Value>../src</Value>
       <Value>../src/config</Value>
-      <Value>../src/ASF/common/services/storage/ctrl_access</Value>
       <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
-      <Value>../src/ASF/thirdparty/fatfs/fatfs-r0.09/src</Value>
       <Value>../src/ASF/common/services/serial</Value>
       <Value>../src/ASF/sam0/drivers/rtc</Value>
       <Value>../src/ASF/sam0/drivers/rtc/rtc_sam_d_r_h</Value>
-      <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
       <Value>../src/ASF/common2/components/memory/sd_mmc</Value>
       <Value>../src/ASF/common2/services/delay</Value>
       <Value>../src/ASF/common2/services/delay/sam0</Value>
       <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
+      <Value>../src/ASF/common/services/storage/ctrl_access</Value>
+      <Value>../src/ASF/thirdparty/fatfs/fatfs-r0.09/src</Value>
+      <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
 </ArmGcc>
@@ -632,17 +632,17 @@
       <Value>../src/ASF/thirdparty/freertos/freertos-10.0.0/Source/portable/GCC/ARM_CM0</Value>
       <Value>../src</Value>
       <Value>../src/config</Value>
-      <Value>../src/ASF/common/services/storage/ctrl_access</Value>
       <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
-      <Value>../src/ASF/thirdparty/fatfs/fatfs-r0.09/src</Value>
       <Value>../src/ASF/common/services/serial</Value>
       <Value>../src/ASF/sam0/drivers/rtc</Value>
       <Value>../src/ASF/sam0/drivers/rtc/rtc_sam_d_r_h</Value>
-      <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
       <Value>../src/ASF/common2/components/memory/sd_mmc</Value>
       <Value>../src/ASF/common2/services/delay</Value>
       <Value>../src/ASF/common2/services/delay/sam0</Value>
       <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
+      <Value>../src/ASF/common/services/storage/ctrl_access</Value>
+      <Value>../src/ASF/thirdparty/fatfs/fatfs-r0.09/src</Value>
+      <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
@@ -696,17 +696,17 @@
       <Value>../src/ASF/thirdparty/freertos/freertos-10.0.0/Source/portable/GCC/ARM_CM0</Value>
       <Value>../src</Value>
       <Value>../src/config</Value>
-      <Value>../src/ASF/common/services/storage/ctrl_access</Value>
       <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
-      <Value>../src/ASF/thirdparty/fatfs/fatfs-r0.09/src</Value>
       <Value>../src/ASF/common/services/serial</Value>
       <Value>../src/ASF/sam0/drivers/rtc</Value>
       <Value>../src/ASF/sam0/drivers/rtc/rtc_sam_d_r_h</Value>
-      <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
       <Value>../src/ASF/common2/components/memory/sd_mmc</Value>
       <Value>../src/ASF/common2/services/delay</Value>
       <Value>../src/ASF/common2/services/delay/sam0</Value>
       <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
+      <Value>../src/ASF/common/services/storage/ctrl_access</Value>
+      <Value>../src/ASF/thirdparty/fatfs/fatfs-r0.09/src</Value>
+      <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
   <armgcc.assembler.debugging.DebugLevel>Default (-g)</armgcc.assembler.debugging.DebugLevel>
@@ -742,17 +742,17 @@
       <Value>../src/ASF/thirdparty/freertos/freertos-10.0.0/Source/portable/GCC/ARM_CM0</Value>
       <Value>../src</Value>
       <Value>../src/config</Value>
-      <Value>../src/ASF/common/services/storage/ctrl_access</Value>
       <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
-      <Value>../src/ASF/thirdparty/fatfs/fatfs-r0.09/src</Value>
       <Value>../src/ASF/common/services/serial</Value>
       <Value>../src/ASF/sam0/drivers/rtc</Value>
       <Value>../src/ASF/sam0/drivers/rtc/rtc_sam_d_r_h</Value>
-      <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
       <Value>../src/ASF/common2/components/memory/sd_mmc</Value>
       <Value>../src/ASF/common2/services/delay</Value>
       <Value>../src/ASF/common2/services/delay/sam0</Value>
       <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
+      <Value>../src/ASF/common/services/storage/ctrl_access</Value>
+      <Value>../src/ASF/thirdparty/fatfs/fatfs-r0.09/src</Value>
+      <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
   <armgcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcc.preprocessingassembler.debugging.DebugLevel>

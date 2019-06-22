@@ -25,6 +25,7 @@ void write_buffer(char * string);
 void read_cmd();
 static void receiver(void * param);
 static void writer(void * param);
+void write_string(char * string);
 int mount_fs();
 
 //global variables
@@ -37,7 +38,6 @@ int mount_fs()
 	Ctrl_status status;
 	FRESULT res;
 	FATFS fs;
-	FIL file_object;
     
     delay_init();
     irq_initialize_vectors();
@@ -85,14 +85,36 @@ void print_usage()
 
 void read_cmd()
 {
+	char line[BUFFER_SIZE];
 	printf("Reading the file...\n");
-	//MUTEX DO ARQUIVO
-	//ABRIR ARQUIVO
-	//LER ELE DO COMEÇO
-	//FECHAR ARQUIVO
-	//FECHAR MUTEX
+	FIL *fd;
+	if(f_open(fd, filename, FA_READ | FA_OPEN_ALWAYS) != FR_OK)
+	{
+		printf("Erro abrindo o arquivo para leitura.\n");
+		return;
+	}
+	while(f_gets(line, BUFFER_SIZE, fd)) 
+	{
+		printf(line);
+	}
+	f_close(fd);
 }
 
+void write_string(char * string)
+{
+	FIL * fd;
+	if(f_open(fd, filename, FA_OPEN_ALWAYS | FA_WRITE) != FR_OK)
+	{
+		printf("Erro abrindo o arquivo para leitura.\n");
+		return;
+	}
+	if(f_lseek(fd, f_size(fd)) != FR_OK)
+	{
+		printf("Erro no lseek()\n");
+	}
+	f_puts(string, fd);
+	f_close(fd);
+}
 
 void write_buffer(char * string)
 {
@@ -152,7 +174,6 @@ void receiver(void * param)
 
 void writer(void * param)
 {
-	char * write_buffer;
 	for(;;)
 	{
 		xSemaphoreTake(terminal_mutex, portMAX_DELAY);
@@ -163,17 +184,9 @@ void writer(void * param)
 		}
 		else
 		{
-			printf("%s", g_buffer);
+			write_string(g_buffer);
 			memset(g_buffer, 0, BUFFER_SIZE);
 		}
-		/*if(xQueueReceive(QMessage, write_buffer, 0))
-		{
-			printf("Recebi: %s", write_buffer);
-		}
-		else
-		{
-			printf("nada no queue\n");
-		}*/
 		xSemaphoreGive(terminal_mutex);
 		vTaskDelay(WRITER_TASK_DELAY);
 	}
