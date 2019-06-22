@@ -32,6 +32,7 @@
       <framework-data>
   <options>
     <option id="common.boards" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="common.services.basic.serial" value="Add" config="" content-id="Atmel.ASF" />
     <option id="sam0.drivers.port" value="Add" config="" content-id="Atmel.ASF" />
     <option id="sam0.drivers.rtc" value="Add" config="calendar_callback" content-id="Atmel.ASF" />
     <option id="sam0.drivers.sercom.usart" value="Add" config="callback" content-id="Atmel.ASF" />
@@ -39,7 +40,7 @@
     <option id="sam0.utils.stdio.stdio_serial" value="Add" config="" content-id="Atmel.ASF" />
     <option id="common.services.fs.fatfs" value="Add" config="" content-id="Atmel.ASF" />
     <option id="thirdparty.os.freertos.version" value="Add" config="10.0.0" content-id="Atmel.ASF" />
-    <option id="common.services.basic.serial" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="common2.components.memory.sd_mmc" value="Add" config="spi" content-id="Atmel.ASF" />
     <option id="common.services.freertos.oled1_xpro_example" value="Add" config="" content-id="Atmel.ASF" />
     <option id="common.services.freertos.oled1_xpro_example.user_io" value="Add" config="" content-id="Atmel.ASF" />
     <option id="common.utils" value="Add" config="" content-id="Atmel.ASF" />
@@ -51,6 +52,9 @@
     <configuration key="common2.services.gfx_mono.display" value="ug_2832hsweg04" default="ug_2832hsweg04" content-id="Atmel.ASF" />
     <configuration key="config.sam0.drivers.sercom.usart" value="callback" default="callback" content-id="Atmel.ASF" />
     <configuration key="config.common.services.fs.fatfs.codepage" value="sbcs" default="sbcs" content-id="Atmel.ASF" />
+    <configuration key="config.common2.components.memory.sd_mmc.ctrl_access" value="disable" default="disable" content-id="Atmel.ASF" />
+    <configuration key="config.sam0.drivers.sercom.spi" value="callback" default="callback" content-id="Atmel.ASF" />
+    <configuration key="config.common2.services.delay" value="systick" default="systick" content-id="Atmel.ASF" />
   </configurations>
   <files>
     <file path="src/ASF/common/boards/board.h" framework="" version="" source="common/boards/board.h" changed="False" content-id="Atmel.ASF" />
@@ -352,6 +356,25 @@
     <file path="src/ASF/thirdparty/fatfs/fatfs-port-r0.09/diskio.c" framework="" version="3.40.0" source="thirdparty\fatfs\fatfs-port-r0.09\diskio.c" changed="False" content-id="Atmel.ASF" />
     <file path="src/ASF/thirdparty/fatfs/fatfs-r0.09/src/option/ccsbcs.c" framework="" version="3.40.0" source="thirdparty\fatfs\fatfs-r0.09\src\option\ccsbcs.c" changed="False" content-id="Atmel.ASF" />
     <file path="src/Config/conf_fatfs.h" framework="" version="3.40.0" source="thirdparty\fatfs\fatfs-r0.09\src\module_config_sbcs\conf_fatfs.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/common2/components/memory/sd_mmc/sd_mmc.c" framework="" version="3.40.0" source="common2\components\memory\sd_mmc\sd_mmc.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/common2/components/memory/sd_mmc/sd_mmc_spi.c" framework="" version="3.40.0" source="common2\components\memory\sd_mmc\sd_mmc_spi.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/common2/components/memory/sd_mmc/sd_mmc.h" framework="" version="3.40.0" source="common2\components\memory\sd_mmc\sd_mmc.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/common2/components/memory/sd_mmc/sd_mmc_spi.h" framework="" version="3.40.0" source="common2\components\memory\sd_mmc\sd_mmc_spi.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/Config/conf_sd_mmc.h" framework="" version="3.40.0" source="common2\components\memory\sd_mmc\module_config_spi\conf_sd_mmc.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/common2/components/memory/sd_mmc/sd_mmc_protocol.h" framework="" version="3.40.0" source="common2\components\memory\sd_mmc\sd_mmc_protocol.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/common2/services/delay/sam0/systick_counter.c" framework="" version="3.40.0" source="common2\services\delay\sam0\systick_counter.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/common2/services/delay/delay.h" framework="" version="3.40.0" source="common2\services\delay\delay.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/common2/services/delay/sam0/systick_counter.h" framework="" version="3.40.0" source="common2\services\delay\sam0\systick_counter.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam0/drivers/sercom/spi/spi_interrupt.c" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\spi_interrupt.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam0/drivers/sercom/spi/spi.c" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\spi.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam0/drivers/sercom/spi/quick_start_dma/qs_spi_dma_use.h" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\quick_start_dma\qs_spi_dma_use.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam0/drivers/sercom/spi/spi_interrupt.h" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\spi_interrupt.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam0/drivers/sercom/spi/quick_start_master_callback/qs_spi_master_callback.h" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\quick_start_master_callback\qs_spi_master_callback.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam0/drivers/sercom/spi/spi.h" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\spi.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam0/drivers/sercom/spi/quick_start_slave/qs_spi_slave_basic.h" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\quick_start_slave\qs_spi_slave_basic.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam0/drivers/sercom/spi/quick_start_slave_callback/qs_spi_slave_callback.h" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\quick_start_slave_callback\qs_spi_slave_callback.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam0/drivers/sercom/spi/quick_start_master/qs_spi_master_basic.h" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\quick_start_master\qs_spi_master_basic.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/Config/conf_spi.h" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\module_config\conf_spi.h" changed="False" content-id="Atmel.ASF" />
   </files>
   <documentation help="http://asf.atmel.com/docs/3.40.0/common.services.freertos.oled1_xpro_example.samd21_xplained_pro/html/index.html" />
   <offline-documentation help="" />
@@ -362,6 +385,22 @@
   <board id="board.samd21_xplained_pro" value="Add" config="" content-id="Atmel.ASF" />
 </framework-data>
     </AsfFrameworkConfig>
+    <avrtool>com.atmel.avrdbg.tool.edbg</avrtool>
+    <avrtoolserialnumber>ATML2130021800019014</avrtoolserialnumber>
+    <avrdeviceexpectedsignature>0x10010300</avrdeviceexpectedsignature>
+    <avrtoolinterface>SWD</avrtoolinterface>
+    <com_atmel_avrdbg_tool_edbg>
+      <ToolOptions>
+        <InterfaceProperties>
+          <SwdClock>2000000</SwdClock>
+        </InterfaceProperties>
+        <InterfaceName>SWD</InterfaceName>
+      </ToolOptions>
+      <ToolType>com.atmel.avrdbg.tool.edbg</ToolType>
+      <ToolNumber>ATML2130021800019014</ToolNumber>
+      <ToolName>EDBG MSD</ToolName>
+    </com_atmel_avrdbg_tool_edbg>
+    <avrtoolinterfaceclock>2000000</avrtoolinterfaceclock>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -381,6 +420,8 @@
       <Value>GFX_MONO_LCD_HEIGHT=64</Value>
       <Value>USART_CALLBACK_MODE=true</Value>
       <Value>RTC_CALENDAR_ASYNC=true</Value>
+      <Value>SYSTICK_MODE</Value>
+      <Value>SPI_CALLBACK_MODE=true</Value>
     </ListValues>
   </armgcc.compiler.symbols.DefSymbols>
   <armgcc.compiler.directories.IncludePaths>
@@ -421,6 +462,10 @@
       <Value>../src/ASF/sam0/drivers/rtc</Value>
       <Value>../src/ASF/sam0/drivers/rtc/rtc_sam_d_r_h</Value>
       <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
+      <Value>../src/ASF/common2/components/memory/sd_mmc</Value>
+      <Value>../src/ASF/common2/services/delay</Value>
+      <Value>../src/ASF/common2/services/delay/sam0</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize for size (-Os)</armgcc.compiler.optimization.level>
@@ -480,9 +525,13 @@
       <Value>../src/ASF/sam0/drivers/rtc</Value>
       <Value>../src/ASF/sam0/drivers/rtc/rtc_sam_d_r_h</Value>
       <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
+      <Value>../src/ASF/common2/components/memory/sd_mmc</Value>
+      <Value>../src/ASF/common2/services/delay</Value>
+      <Value>../src/ASF/common2/services/delay/sam0</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
-  <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DBOARD=SAMD21_XPLAINED_PRO -DGFX_MONO_LCD_HEIGHT=64 -DUSART_CALLBACK_MODE=true -D__FREERTOS__ -D__SAMD21J18A__ -DRTC_CALENDAR_ASYNC=true</armgcc.preprocessingassembler.general.AssemblerFlags>
+  <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DBOARD=SAMD21_XPLAINED_PRO -DGFX_MONO_LCD_HEIGHT=64 -DUSART_CALLBACK_MODE=true -D__FREERTOS__ -D__SAMD21J18A__ -DRTC_CALENDAR_ASYNC=true -DSYSTICK_MODE -DSPI_CALLBACK_MODE=true</armgcc.preprocessingassembler.general.AssemblerFlags>
   <armgcc.preprocessingassembler.general.IncludePaths>
     <ListValues>
       <Value>../src/ASF/sam0/boards/samd21_xplained_pro</Value>
@@ -521,6 +570,10 @@
       <Value>../src/ASF/sam0/drivers/rtc</Value>
       <Value>../src/ASF/sam0/drivers/rtc/rtc_sam_d_r_h</Value>
       <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
+      <Value>../src/ASF/common2/components/memory/sd_mmc</Value>
+      <Value>../src/ASF/common2/services/delay</Value>
+      <Value>../src/ASF/common2/services/delay/sam0</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
 </ArmGcc>
@@ -544,6 +597,8 @@
       <Value>GFX_MONO_LCD_HEIGHT=64</Value>
       <Value>USART_CALLBACK_MODE=true</Value>
       <Value>RTC_CALENDAR_ASYNC=true</Value>
+      <Value>SYSTICK_MODE</Value>
+      <Value>SPI_CALLBACK_MODE=true</Value>
     </ListValues>
   </armgcc.compiler.symbols.DefSymbols>
   <armgcc.compiler.directories.IncludePaths>
@@ -584,6 +639,10 @@
       <Value>../src/ASF/sam0/drivers/rtc</Value>
       <Value>../src/ASF/sam0/drivers/rtc/rtc_sam_d_r_h</Value>
       <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
+      <Value>../src/ASF/common2/components/memory/sd_mmc</Value>
+      <Value>../src/ASF/common2/services/delay</Value>
+      <Value>../src/ASF/common2/services/delay/sam0</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
@@ -644,10 +703,14 @@
       <Value>../src/ASF/sam0/drivers/rtc</Value>
       <Value>../src/ASF/sam0/drivers/rtc/rtc_sam_d_r_h</Value>
       <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
+      <Value>../src/ASF/common2/components/memory/sd_mmc</Value>
+      <Value>../src/ASF/common2/services/delay</Value>
+      <Value>../src/ASF/common2/services/delay/sam0</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
   <armgcc.assembler.debugging.DebugLevel>Default (-g)</armgcc.assembler.debugging.DebugLevel>
-  <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DBOARD=SAMD21_XPLAINED_PRO -DGFX_MONO_LCD_HEIGHT=64 -DUSART_CALLBACK_MODE=true -D__FREERTOS__ -D__SAMD21J18A__ -DRTC_CALENDAR_ASYNC=true</armgcc.preprocessingassembler.general.AssemblerFlags>
+  <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DBOARD=SAMD21_XPLAINED_PRO -DGFX_MONO_LCD_HEIGHT=64 -DUSART_CALLBACK_MODE=true -D__FREERTOS__ -D__SAMD21J18A__ -DRTC_CALENDAR_ASYNC=true -DSYSTICK_MODE -DSPI_CALLBACK_MODE=true</armgcc.preprocessingassembler.general.AssemblerFlags>
   <armgcc.preprocessingassembler.general.IncludePaths>
     <ListValues>
       <Value>../src/ASF/sam0/boards/samd21_xplained_pro</Value>
@@ -686,6 +749,10 @@
       <Value>../src/ASF/sam0/drivers/rtc</Value>
       <Value>../src/ASF/sam0/drivers/rtc/rtc_sam_d_r_h</Value>
       <Value>../src/ASF/thirdparty/fatfs/fatfs-port-r0.09/sam0</Value>
+      <Value>../src/ASF/common2/components/memory/sd_mmc</Value>
+      <Value>../src/ASF/common2/services/delay</Value>
+      <Value>../src/ASF/common2/services/delay/sam0</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
   <armgcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcc.preprocessingassembler.debugging.DebugLevel>
@@ -695,6 +762,13 @@
   <ItemGroup>
     <Folder Include="src\" />
     <Folder Include="src\ASF\" />
+    <Folder Include="src\ASF\common2\" />
+    <Folder Include="src\ASF\common2\components\" />
+    <Folder Include="src\ASF\common2\components\memory\" />
+    <Folder Include="src\ASF\common2\components\memory\sd_mmc\" />
+    <Folder Include="src\ASF\common2\services\" />
+    <Folder Include="src\ASF\common2\services\delay\" />
+    <Folder Include="src\ASF\common2\services\delay\sam0\" />
     <Folder Include="src\ASF\common\" />
     <Folder Include="src\ASF\common\boards\" />
     <Folder Include="src\ASF\common\services\" />
@@ -713,6 +787,12 @@
     <Folder Include="src\ASF\sam0\drivers\rtc\" />
     <Folder Include="src\ASF\sam0\drivers\rtc\rtc_sam_d_r_h\" />
     <Folder Include="src\ASF\sam0\drivers\sercom\" />
+    <Folder Include="src\ASF\sam0\drivers\sercom\spi\" />
+    <Folder Include="src\ASF\sam0\drivers\sercom\spi\quick_start_dma\" />
+    <Folder Include="src\ASF\sam0\drivers\sercom\spi\quick_start_master\" />
+    <Folder Include="src\ASF\sam0\drivers\sercom\spi\quick_start_master_callback\" />
+    <Folder Include="src\ASF\sam0\drivers\sercom\spi\quick_start_slave\" />
+    <Folder Include="src\ASF\sam0\drivers\sercom\spi\quick_start_slave_callback\" />
     <Folder Include="src\ASF\sam0\drivers\sercom\usart\" />
     <Folder Include="src\ASF\sam0\drivers\sercom\usart\quick_start\" />
     <Folder Include="src\ASF\sam0\drivers\sercom\usart\quick_start_callback\" />
@@ -775,12 +855,63 @@
     <Folder Include="src\config\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\ASF\common2\components\memory\sd_mmc\sd_mmc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\common2\components\memory\sd_mmc\sd_mmc.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common2\components\memory\sd_mmc\sd_mmc_protocol.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\common2\components\memory\sd_mmc\sd_mmc_spi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\common2\components\memory\sd_mmc\sd_mmc_spi.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common2\services\delay\delay.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\common2\services\delay\sam0\systick_counter.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\common2\services\delay\sam0\systick_counter.h">
+      <SubType>compile</SubType>
+    </None>
     <Compile Include="src\ASF\sam0\drivers\rtc\rtc_sam_d_r_h\rtc_calendar.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\ASF\sam0\drivers\rtc\rtc_sam_d_r_h\rtc_calendar_interrupt.c">
       <SubType>compile</SubType>
     </Compile>
+    <None Include="src\ASF\sam0\drivers\sercom\spi\quick_start_dma\qs_spi_dma_use.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\sercom\spi\quick_start_master_callback\qs_spi_master_callback.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\sercom\spi\quick_start_slave\qs_spi_slave_basic.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\sercom\spi\quick_start_slave_callback\qs_spi_slave_callback.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\sercom\spi\quick_start_master\qs_spi_master_basic.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\sam0\drivers\sercom\spi\spi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\sam0\drivers\sercom\spi\spi.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\sam0\drivers\sercom\spi\spi_interrupt.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\sam0\drivers\sercom\spi\spi_interrupt.h">
+      <SubType>compile</SubType>
+    </None>
     <Compile Include="src\ASF\sam0\utils\stdio\read.c">
       <SubType>compile</SubType>
     </Compile>
@@ -1663,6 +1794,12 @@
     <Compile Include="src\ASF\thirdparty\freertos\freertos-10.0.0\Source\timers.c">
       <SubType>compile</SubType>
     </Compile>
+    <None Include="src\config\conf_sd_mmc.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\config\conf_spi.h">
+      <SubType>compile</SubType>
+    </None>
     <Compile Include="src\demotasks.c">
       <SubType>compile</SubType>
     </Compile>

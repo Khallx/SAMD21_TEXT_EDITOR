@@ -25,9 +25,35 @@ void write_buffer(char * string);
 void read_cmd();
 static void receiver(void * param);
 static void writer(void * param);
+int mount_fs();
 
 //global variables
 static char g_buffer[BUFFER_SIZE] = {0};
+static const char filename[] = "editor.txt";
+
+//mount a FAT file system from a flash drive connected to EXT1
+int mount_fs()
+{
+	Ctrl_status status;
+	FRESULT res;
+	FATFS fs;
+	FIL file_object;
+    
+    delay_init();
+    irq_initialize_vectors();
+	cpu_irq_enable();
+    /* Initialize SD MMC stack */
+	sd_mmc_init();
+	printf("Mounting FATfs...\n");
+    memset(&fs, 0, sizeof(FATFS));
+    res = f_mount(LUN_ID_SD_MMC_0_MEM, &fs);
+    if (FR_INVALID_DRIVE == res) {
+        printf("[FAIL] res %d\r\n", res);
+        return 1;
+    }
+    printf("[OK]\r\n");
+}
+
 
 void parse_command(char * cmd)
 {
@@ -161,6 +187,7 @@ void demotasks_init(void)
 	int error_return = 0;
 	//configure USART
 	set_usart_config(9600);
+    mount_fs();
 	terminal_mutex = xSemaphoreCreateMutex();
 	queue_mutex = xSemaphoreCreateMutex();
 	QMessage = xQueueCreate(1, sizeof(char *));

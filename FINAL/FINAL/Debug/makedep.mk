@@ -2,9 +2,19 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\ASF\common2\components\memory\sd_mmc\sd_mmc.c
+
+src\ASF\common2\components\memory\sd_mmc\sd_mmc_spi.c
+
+src\ASF\common2\services\delay\sam0\systick_counter.c
+
 src\ASF\sam0\drivers\rtc\rtc_sam_d_r_h\rtc_calendar.c
 
 src\ASF\sam0\drivers\rtc\rtc_sam_d_r_h\rtc_calendar_interrupt.c
+
+src\ASF\sam0\drivers\sercom\spi\spi.c
+
+src\ASF\sam0\drivers\sercom\spi\spi_interrupt.c
 
 src\ASF\sam0\utils\stdio\read.c
 

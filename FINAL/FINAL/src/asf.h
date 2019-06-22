@@ -56,6 +56,9 @@
 #include <compiler.h>
 #include <status_codes.h>
 
+// From module: Delay routines
+#include <delay.h>
+
 // From module: FatFS file system
 #include <diskio.h>
 #include <ff.h>
@@ -100,9 +103,16 @@
 #include <rtc_calendar_interrupt.h>
 #include <rtc_tamper.h>
 
+// From module: SD/MMC stack on SPI interface
+#include <sd_mmc.h>
+
 // From module: SERCOM Callback API
 #include <sercom.h>
 #include <sercom_interrupt.h>
+
+// From module: SERCOM SPI - Serial Peripheral Interface (Callback APIs)
+#include <spi.h>
+#include <spi_interrupt.h>
 
 // From module: SERCOM USART - Serial Communications (Callback APIs)
 #include <usart.h>
