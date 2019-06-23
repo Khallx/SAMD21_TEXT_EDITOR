@@ -19,6 +19,7 @@ static QueueHandle_t QMessage;
 #define WRITER_TASK_DELAY	(10 / portTICK_RATE_MS)
 
 //function prototypes
+/*
 void set_usart_config(int32_t baudrate);
 void parse_command(char * cmd);
 void print_usage();
@@ -28,16 +29,16 @@ static void receiver(void * param);
 static void writer(void * param);
 void write_string(char * string);
 int mount_fs();
-
+*/
 //global variables
 static char g_buffer[BUFFER_SIZE] = {0};
-static const char filename[] = "editor.txt";
+static const char filename[] = "ed.txt";
 
-static FATFS fs;
 
 //mount a FAT file system from a flash drive connected to EXT1
 int mount_fs()
 {
+	FATFS fs;
 	FRESULT res;
 	Ctrl_status status;
 	char test_file_name[] = "0:ola.txt";
@@ -49,6 +50,16 @@ int mount_fs()
 	
     /* Initialize SD MMC stack */
 	sd_mmc_init();
+	
+	do {
+		status = sd_mmc_test_unit_ready(0);
+		if (CTRL_FAIL == status) {
+			printf("Card install FAIL\n\r");
+			printf("Please unplug and re-plug the card.\n\r");
+			while (CTRL_NO_PRESENT != sd_mmc_check(0)) {
+			}
+		}
+	} while (CTRL_GOOD != status);
 	
 	printf("Mounting FATfs...\n");
     memset(&fs, 0, sizeof(FATFS));
@@ -66,6 +77,8 @@ int mount_fs()
 	if (res != FR_OK) {
 		printf("[FAIL] res %d\r\n", res);
 	}
+	f_puts("ola", &file_object);
+	f_close(&file_object);
 	return 0;
 }
 
@@ -103,36 +116,36 @@ void read_cmd()
 	char line[BUFFER_SIZE];
 	int res = FR_OK;
 	printf("Reading the file...\n");
-	FIL *fd; 
-	res = f_open(fd, filename, FA_READ | FA_OPEN_ALWAYS);
+	FIL fd; 
+	res = f_open(&fd, filename, FA_READ | FA_OPEN_ALWAYS);
 	if( res != FR_OK)
 	{
 		printf("Erro abrindo o arquivo para leitura: %d\n", res);
 		return;
 	}
-	while(f_gets(line, BUFFER_SIZE, fd)) 
+	while(f_gets(line, BUFFER_SIZE, &fd)) 
 	{
 		printf(line);
 	}
-	f_close(fd);
+	f_close(&fd);
 }
 
 void write_string(char * string)
 {
-	FIL * fd;
+	FIL fd;
 	int res;
-	res = f_open(fd, filename, FA_OPEN_ALWAYS | FA_WRITE);
+	res = f_open(&fd, filename, FA_OPEN_ALWAYS | FA_WRITE);
 	if(res != FR_OK)
 	{
 		printf("Erro abrindo o arquivo para escrita: %d\n", res);
 		return;
 	}
-	if(f_lseek(fd, f_size(fd)) != FR_OK)
+	if(f_lseek(&fd, f_size(&fd)) != FR_OK)
 	{
 		printf("Erro no lseek()\n");
 	}
-	f_puts(string, fd);
-	f_close(fd);
+	f_puts(string, &fd);
+	f_close(&fd);
 }
 
 void write_buffer(char * string)
@@ -218,8 +231,6 @@ void demotasks_init(void)
 {
 	int error_return = 0;
 	//configure USART
-	set_usart_config(9600);
-    mount_fs();
 	terminal_mutex = xSemaphoreCreateMutex();
 	queue_mutex = xSemaphoreCreateMutex();
 	QMessage = xQueueCreate(1, sizeof(char *));
@@ -230,7 +241,7 @@ void demotasks_init(void)
 	
 	error_return = xTaskCreate(receiver,
 			(const char *) "RX",
-			configMINIMAL_STACK_SIZE + 514,
+			1024,
 			NULL,
 			RECEVER_TASK_PRIORITY,
 			NULL);
@@ -240,7 +251,7 @@ void demotasks_init(void)
 	}
 	error_return = xTaskCreate(writer,
 			(const char *) "WR",
-			configMINIMAL_STACK_SIZE + 514,
+			1024,
 			NULL,
 			WRITER_TASK_PRIORITY,
 			NULL);

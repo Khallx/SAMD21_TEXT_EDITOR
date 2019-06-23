@@ -1,9 +1,9 @@
 /**
  * \file
  *
- * \brief FreeRTOS demo tasks header.
+ * \brief Example configuration.
  *
- * Copyright (c) 2013-2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2014-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
@@ -30,43 +30,19 @@
  * \asf_license_stop
  *
  */
-
-#ifndef DEMOTASKS_H
-#define DEMOTASKS_H
-
-/**
- * \defgroup freertos_sam0_demo_tasks_group FreeRTOS demo tasks
- *
- * The demo tasks demonstrate basic use of FreeRTOS, with inter-task
- * communication using queues and mutexes.
- *
- * For details on how the demo works, see \ref appdoc_intro.
- *
- * For detailed information on the tasks, see:
- * - \ref main_task()
- * - \ref graph_task()
- * - \ref terminal_task()
- * - \ref about_task()
- * - \ref uart_task()
- *
- * The demo tasks depend on the following drivers:
- * - \ref oled1_xpro_io_group
- * - \ref edbg_cdc_rx_group
- * - \ref asfdoc_common2_gfx_mono
- *
- * @{
+/*
+ * Support and FAQ: visit <a href="https://www.microchip.com/support/">Microchip Support</a>
  */
 
-void demotasks_init(void);
-void set_usart_config(int32_t baudrate);
-void parse_command(char * cmd);
-void print_usage();
-void write_buffer(char * string);
-void read_cmd();
-static void receiver(void * param);
-static void writer(void * param);
-void write_string(char * string);
-int mount_fs();
-/** @} */
+#ifndef CONF_EXAMPLE_H_INCLUDED
+#define CONF_EXAMPLE_H_INCLUDED
 
-#endif // DEMO_TASKS_H
+#define CONF_STDIO_USART          EDBG_CDC_MODULE
+#define CONF_STDIO_MUX_SETTING    EDBG_CDC_SERCOM_MUX_SETTING
+#define CONF_STDIO_PINMUX_PAD0    EDBG_CDC_SERCOM_PINMUX_PAD0
+#define CONF_STDIO_PINMUX_PAD1    EDBG_CDC_SERCOM_PINMUX_PAD1
+#define CONF_STDIO_PINMUX_PAD2    EDBG_CDC_SERCOM_PINMUX_PAD2
+#define CONF_STDIO_PINMUX_PAD3    EDBG_CDC_SERCOM_PINMUX_PAD3
+#define CONF_STDIO_BAUDRATE       9600
+
+#endif /* CONF_EXAMPLE_H_INCLUDED */

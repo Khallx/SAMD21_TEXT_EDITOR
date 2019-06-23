@@ -1,9 +1,9 @@
 /**
  * \file
  *
- * \brief FreeRTOS demo tasks header.
+ * \brief Chip-specific sleep manager configuration
  *
- * Copyright (c) 2013-2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2014-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
@@ -30,43 +30,13 @@
  * \asf_license_stop
  *
  */
-
-#ifndef DEMOTASKS_H
-#define DEMOTASKS_H
-
-/**
- * \defgroup freertos_sam0_demo_tasks_group FreeRTOS demo tasks
- *
- * The demo tasks demonstrate basic use of FreeRTOS, with inter-task
- * communication using queues and mutexes.
- *
- * For details on how the demo works, see \ref appdoc_intro.
- *
- * For detailed information on the tasks, see:
- * - \ref main_task()
- * - \ref graph_task()
- * - \ref terminal_task()
- * - \ref about_task()
- * - \ref uart_task()
- *
- * The demo tasks depend on the following drivers:
- * - \ref oled1_xpro_io_group
- * - \ref edbg_cdc_rx_group
- * - \ref asfdoc_common2_gfx_mono
- *
- * @{
+/*
+ * Support and FAQ: visit <a href="https://www.microchip.com/support/">Microchip Support</a>
  */
+#ifndef CONF_SLEEPMGR_INCLUDED
+#define CONF_SLEEPMGR_INCLUDED
 
-void demotasks_init(void);
-void set_usart_config(int32_t baudrate);
-void parse_command(char * cmd);
-void print_usage();
-void write_buffer(char * string);
-void read_cmd();
-static void receiver(void * param);
-static void writer(void * param);
-void write_string(char * string);
-int mount_fs();
-/** @} */
+// Sleep manager options
+#define CONFIG_SLEEPMGR_ENABLE
 
-#endif // DEMO_TASKS_H
+#endif /* CONF_SLEEPMGR_INCLUDED */
