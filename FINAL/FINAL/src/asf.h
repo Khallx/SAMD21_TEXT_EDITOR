@@ -103,9 +103,6 @@
 #include <rtc_calendar_interrupt.h>
 #include <rtc_tamper.h>
 
-// From module: SD/MMC Memory Control Access - Enable
-#include <sd_mmc_mem.h>
-
 // From module: SD/MMC stack on SPI interface
 #include <sd_mmc.h>
 

@@ -7,12 +7,9 @@
 
 //mutexes
 static xSemaphoreHandle terminal_mutex;
-static xSemaphoreHandle queue_mutex;
-//message queues
-static QueueHandle_t QMessage;
 
 //constant definitions
-#define BUFFER_SIZE 100
+#define BUFFER_SIZE 50
 #define RECEVER_TASK_PRIORITY (tskIDLE_PRIORITY + 5)
 #define WRITER_TASK_PRIORITY (tskIDLE_PRIORITY + 5)
 #define RECEVER_TASK_DELAY	(10 / portTICK_RATE_MS)
@@ -68,17 +65,28 @@ int mount_fs()
         printf("[FAIL] res %d\r\n", res);
         return 1;
     }
-    printf("[OK]\r\n");
-	test_file_name[0] = LUN_ID_SD_MMC_0_MEM + '0';
-	printf("%s\n", test_file_name);
+	/*test_file_name[0] = LUN_ID_SD_MMC_0_MEM + '0';
 	res = f_open(&file_object,
 			(char const *)test_file_name,
 			FA_OPEN_ALWAYS | FA_WRITE);
 	if (res != FR_OK) {
 		printf("[FAIL] res %d\r\n", res);
+		return 1;
 	}
-	f_puts("ola", &file_object);
-	f_close(&file_object);
+	res = f_puts("ola", &file_object);
+	printf("res: %d\n", res);
+	if(res == EOF)
+	{
+		printf("Error writing to test file...\n");
+		return 1;
+	}
+	res = f_close(&file_object);
+	if(res != FR_OK)
+	{
+		printf("Error closing test file: %d\n", res);
+		return 1;
+	}*/
+	printf("[OK]\r\n");
 	return 0;
 }
 
@@ -127,7 +135,15 @@ void read_cmd()
 	{
 		printf(line);
 	}
-	f_close(&fd);
+	printf("Closing after reading...\n");
+	res = f_close(&fd);
+	if(res != FR_OK)
+	{
+		printf("Error closing: %d", res);
+		return;
+	}
+	printf("[OK]\n");
+	return;
 }
 
 void write_string(char * string)
@@ -144,8 +160,20 @@ void write_string(char * string)
 	{
 		printf("Erro no lseek()\n");
 	}
-	f_puts(string, &fd);
-	f_close(&fd);
+	res = f_puts(string, &fd);
+	if(res == EOF)
+	{
+		printf("Error writing to file\n");
+	}
+	printf("Closing after writing...\n");
+	res = f_close(&fd);
+	if(res != FR_OK)
+	{
+		printf("Error closing: %d", res);
+		return;
+	}
+	printf("[OK]\n");
+	return;
 }
 
 void write_buffer(char * string)
@@ -164,6 +192,7 @@ void write_buffer(char * string)
 		return;
 	}
 	printf("Writing to buffer: %s", message);
+	//send message to write buffer (this functions does not write, but send the data to writer task)
 	strcpy(g_buffer, message);
 	return;
 }
@@ -209,13 +238,14 @@ void writer(void * param)
 	for(;;)
 	{
 		xSemaphoreTake(terminal_mutex, portMAX_DELAY);
-		printf("Dentro do semafaro\n");
+		/*check if anything is available on buffer */
 		if(*g_buffer == 0)
 		{
-			printf("buffer vazio\n");
+			/* if there is nothing on the buffer, simply exit
 		}
 		else
 		{
+			/* if buffer is available, write the contents of the buffer to file */
 			write_string(g_buffer);
 			memset(g_buffer, 0, BUFFER_SIZE);
 		}
@@ -232,16 +262,10 @@ void demotasks_init(void)
 	int error_return = 0;
 	//configure USART
 	terminal_mutex = xSemaphoreCreateMutex();
-	queue_mutex = xSemaphoreCreateMutex();
-	QMessage = xQueueCreate(1, sizeof(char *));
-	if(QMessage == 0)
-	{
-		printf("Failed to create Queue\n");
-	}
 	
 	error_return = xTaskCreate(receiver,
 			(const char *) "RX",
-			1024,
+			2048,
 			NULL,
 			RECEVER_TASK_PRIORITY,
 			NULL);
@@ -251,7 +275,7 @@ void demotasks_init(void)
 	}
 	error_return = xTaskCreate(writer,
 			(const char *) "WR",
-			1024,
+			2048,
 			NULL,
 			WRITER_TASK_PRIORITY,
 			NULL);
