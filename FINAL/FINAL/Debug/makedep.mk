@@ -4,6 +4,8 @@
 
 src\ASF\common2\components\memory\sd_mmc\sd_mmc.c
 
+src\ASF\common2\components\memory\sd_mmc\sd_mmc_mem.c
+
 src\ASF\common2\components\memory\sd_mmc\sd_mmc_spi.c
 
 src\ASF\common2\services\delay\sam0\systick_counter.c

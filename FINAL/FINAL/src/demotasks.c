@@ -2,6 +2,7 @@
 #include <conf_demo.h>
 #include <stdio.h>
 #include <string.h>
+#include <sd_mmc_mem.h>
 #include "demotasks.h"
 
 //mutexes
@@ -32,26 +33,40 @@ int mount_fs();
 static char g_buffer[BUFFER_SIZE] = {0};
 static const char filename[] = "editor.txt";
 
+static FATFS fs;
+
 //mount a FAT file system from a flash drive connected to EXT1
 int mount_fs()
 {
-	Ctrl_status status;
 	FRESULT res;
-	FATFS fs;
-    
+	Ctrl_status status;
+	char test_file_name[] = "0:ola.txt";
+	FIL file_object;
+	
     delay_init();
     irq_initialize_vectors();
 	cpu_irq_enable();
+	
     /* Initialize SD MMC stack */
 	sd_mmc_init();
+	
 	printf("Mounting FATfs...\n");
     memset(&fs, 0, sizeof(FATFS));
     res = f_mount(LUN_ID_SD_MMC_0_MEM, &fs);
-    if (FR_INVALID_DRIVE == res) {
+    if (FR_OK != res) {
         printf("[FAIL] res %d\r\n", res);
         return 1;
     }
     printf("[OK]\r\n");
+	test_file_name[0] = LUN_ID_SD_MMC_0_MEM + '0';
+	printf("%s\n", test_file_name);
+	res = f_open(&file_object,
+			(char const *)test_file_name,
+			FA_OPEN_ALWAYS | FA_WRITE);
+	if (res != FR_OK) {
+		printf("[FAIL] res %d\r\n", res);
+	}
+	return 0;
 }
 
 
@@ -86,11 +101,13 @@ void print_usage()
 void read_cmd()
 {
 	char line[BUFFER_SIZE];
+	int res = FR_OK;
 	printf("Reading the file...\n");
-	FIL *fd;
-	if(f_open(fd, filename, FA_READ | FA_OPEN_ALWAYS) != FR_OK)
+	FIL *fd; 
+	res = f_open(fd, filename, FA_READ | FA_OPEN_ALWAYS);
+	if( res != FR_OK)
 	{
-		printf("Erro abrindo o arquivo para leitura.\n");
+		printf("Erro abrindo o arquivo para leitura: %d\n", res);
 		return;
 	}
 	while(f_gets(line, BUFFER_SIZE, fd)) 
@@ -103,9 +120,11 @@ void read_cmd()
 void write_string(char * string)
 {
 	FIL * fd;
-	if(f_open(fd, filename, FA_OPEN_ALWAYS | FA_WRITE) != FR_OK)
+	int res;
+	res = f_open(fd, filename, FA_OPEN_ALWAYS | FA_WRITE);
+	if(res != FR_OK)
 	{
-		printf("Erro abrindo o arquivo para leitura.\n");
+		printf("Erro abrindo o arquivo para escrita: %d\n", res);
 		return;
 	}
 	if(f_lseek(fd, f_size(fd)) != FR_OK)
@@ -221,7 +240,7 @@ void demotasks_init(void)
 	}
 	error_return = xTaskCreate(writer,
 			(const char *) "WR",
-			configMINIMAL_STACK_SIZE + 128,
+			configMINIMAL_STACK_SIZE + 514,
 			NULL,
 			WRITER_TASK_PRIORITY,
 			NULL);

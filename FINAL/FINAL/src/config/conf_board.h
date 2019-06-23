@@ -34,4 +34,6 @@
 #ifndef CONF_BOARD_H_INCLUDED
 #define CONF_BOARD_H_INCLUDED
 
+#define ACCESS_MEM_TO_RAM_ENABLED		//changed
+
 #endif /* CONF_BOARD_H_INCLUDED */

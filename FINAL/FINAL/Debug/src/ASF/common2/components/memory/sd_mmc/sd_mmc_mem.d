@@ -1,7 +1,7 @@
-src/ASF/common/services/storage/ctrl_access/ctrl_access.d \
- src/ASF/common/services/storage/ctrl_access/ctrl_access.o: \
- ../src/ASF/common/services/storage/ctrl_access/ctrl_access.c \
- ../src/ASF/sam0/utils/compiler.h \
+src/ASF/common2/components/memory/sd_mmc/sd_mmc_mem.d \
+ src/ASF/common2/components/memory/sd_mmc/sd_mmc_mem.o: \
+ ../src/ASF/common2/components/memory/sd_mmc/sd_mmc_mem.c \
+ ../src/config/conf_access.h ../src/ASF/sam0/utils/compiler.h \
  e:\programas\atmel\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stddef.h \
  ../src/ASF/common/utils/parts.h ../src/ASF/sam0/utils/status_codes.h \
  e:\programas\atmel\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdint.h \
@@ -111,12 +111,15 @@ src/ASF/common/services/storage/ctrl_access/ctrl_access.d \
  e:\programas\atmel\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\alloca.h \
  ../src/ASF/common/utils/interrupt.h \
  ../src/ASF/common/utils/interrupt/interrupt_sam_nvic.h \
- ../src/ASF/common/services/storage/ctrl_access/ctrl_access.h \
- ../src/config/conf_access.h ../src/ASF/common/boards/board.h \
+ ../src/ASF/common/boards/board.h \
  ../src/ASF/sam0/boards/samd21_xplained_pro/samd21_xplained_pro.h \
- ../src/config/conf_board.h \
+ ../src/config/conf_board.h ../src/config/conf_sd_mmc.h \
+ ../src/ASF/common2/components/memory/sd_mmc/sd_mmc.h \
  ../src/ASF/common2/components/memory/sd_mmc/sd_mmc_mem.h \
- ../src/ASF/common/services/storage/ctrl_access/ctrl_access.h
+ ../src/ASF/common/services/storage/ctrl_access/ctrl_access.h \
+ ../src/ASF/common2/components/memory/sd_mmc/sd_mmc_mem.h
+
+../src/config/conf_access.h:
 
 ../src/ASF/sam0/utils/compiler.h:
 
@@ -340,16 +343,18 @@ e:\programas\atmel\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\all
 
 ../src/ASF/common/utils/interrupt/interrupt_sam_nvic.h:
 
-../src/ASF/common/services/storage/ctrl_access/ctrl_access.h:
-
-../src/config/conf_access.h:
-
 ../src/ASF/common/boards/board.h:
 
 ../src/ASF/sam0/boards/samd21_xplained_pro/samd21_xplained_pro.h:
 
 ../src/config/conf_board.h:
 
+../src/config/conf_sd_mmc.h:
+
+../src/ASF/common2/components/memory/sd_mmc/sd_mmc.h:
+
 ../src/ASF/common2/components/memory/sd_mmc/sd_mmc_mem.h:
 
 ../src/ASF/common/services/storage/ctrl_access/ctrl_access.h:
+
+../src/ASF/common2/components/memory/sd_mmc/sd_mmc_mem.h:

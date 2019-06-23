@@ -1,9 +1,9 @@
 /**
  * \file
  *
- * \brief FatFS configurations.
+ * \brief FATFS configuration file.
  *
- * Copyright (c) 2014-2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2016-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
@@ -30,6 +30,9 @@
  * \asf_license_stop
  *
  */
+/*
+ * Support and FAQ: visit <a href="https://www.microchip.com/support/">Microchip Support</a>
+ */
 
 #ifndef CONF_FATFS_H_INCLUDED
 #define CONF_FATFS_H_INCLUDED
@@ -42,7 +45,6 @@
 / the configuration options.
 /
 /----------------------------------------------------------------------------*/
-
 #ifndef _FFCONF
 #define _FFCONF 6502    /* Revision ID */
 
@@ -51,7 +53,7 @@
 / Functions and Buffer Configurations
 /----------------------------------------------------------------------------*/
 
-#define    _FS_TINY        0    /* 0:Normal or 1:Tiny */
+#define    _FS_TINY        1    /* 0:Normal or 1:Tiny */
 /* When _FS_TINY is set to 1, FatFs uses the sector buffer in the file system
 /  object instead of the sector buffer in the individual file object for file
 /  data transfer. This reduces memory consumption 512 bytes each file object. */
@@ -73,11 +75,11 @@
 /   3: f_lseek is removed in addition to 2. */
 
 
-#define    _USE_STRFUNC    0    /* 0:Disable or 1-2:Enable */
+#define    _USE_STRFUNC    1    /* 0:Disable or 1-2:Enable */
 /* To enable string functions, set _USE_STRFUNC to 1 or 2. */
 
 
-#define    _USE_MKFS        0    /* 0:Disable or 1:Enable */
+#define    _USE_MKFS    1        /* 0:Disable or 1:Enable */
 /* To enable f_mkfs function, set _USE_MKFS to 1 and set _FS_READONLY to 0 */
 
 
@@ -93,6 +95,7 @@
 /*---------------------------------------------------------------------------/
 / Locale and Namespace Configurations
 /----------------------------------------------------------------------------*/
+
 #define _CODE_PAGE    850
 /* The _CODE_PAGE specifies the OEM code page to be used on the target system.
 /  Incorrect setting of the code page can cause a file open failure.
@@ -125,6 +128,7 @@
 /    1    - ASCII only (Valid for non LFN cfg.)
 */
 
+
 #define    _USE_LFN    2        /* 0 to 3 */
 #define    _MAX_LFN    255        /* Maximum LFN length to handle (12 to 255) */
 /* The _USE_LFN option switches the LFN support.
@@ -152,7 +156,7 @@
 /   1: Enable relative path. f_chdrive() and f_chdir() are available.
 /   2: f_getcwd() is available in addition to 1.
 /
-/  Note that output of the f_readdir fnction is affected by this option. */
+/  Note that output of the f_readdir function is affected by this option. */
 
 
 
@@ -160,7 +164,7 @@
 / Physical Drive Configurations
 /----------------------------------------------------------------------------*/
 
-#define _VOLUMES    1
+#define    _VOLUMES       8
 /* Number of volumes (logical drives) to be used. */
 
 
@@ -169,18 +173,18 @@
 /  Always set 512 for memory card and hard disk but a larger value may be
 /  required for on-board flash memory, floppy disk and optical disk.
 /  When _MAX_SS is larger than 512, it configures FatFs to variable sector size
-/  and GET_SECTOR_SIZE command must be implememted to the disk_ioctl function. */
+/  and GET_SECTOR_SIZE command must be implemented to the disk_ioctl function. */
 
 
 #define    _MULTI_PARTITION    0    /* 0:Single partition, 1/2:Enable multiple partition */
 /* When set to 0, each volume is bound to the same physical drive number and
-/ it can mount only first primaly partition. When it is set to 1, each volume
+/ it can mount only first primary partition. When it is set to 1, each volume
 / is tied to the partitions listed in VolToPart[]. */
 
 
 #define    _USE_ERASE    0    /* 0:Disable or 1:Enable */
 /* To enable sector erase feature, set _USE_ERASE to 1. CTRL_ERASE_SECTOR command
-/  should be added to the disk_ioctl functio. */
+/  should be added to the disk_ioctl function. */
 
 
 
@@ -193,7 +197,7 @@
 /  option defines which access method is used to the word data on the FAT volume.
 /
 /   0: Byte-by-byte access.
-/   1: Word access. Do not choose this unless following condition is met.
+/   1: Word access. Do not choose this unless the following condition is met.
 /
 /  When the byte order on the memory is big-endian or address miss-aligned word
 /  access results incorrect behavior, the _WORD_ACCESS must be set to 0.
@@ -214,14 +218,13 @@
 /   0: Disable reentrancy. _SYNC_t and _FS_TIMEOUT have no effect.
 /   1: Enable reentrancy. Also user provided synchronization handlers,
 /      ff_req_grant, ff_rel_grant, ff_del_syncobj and ff_cre_syncobj
-/      function must be added to the project. */
+/      functions must be added to the project. */
 
 
 #define    _FS_SHARE    0    /* 0:Disable or >=1:Enable */
-/* To enable file shareing feature, set _FS_SHARE to 1 or greater. The value
+/* To enable file sharing feature, set _FS_SHARE to 1 or greater. The value
    defines how many files can be opened simultaneously. */
 
-
-#endif /* _FFCONFIG */
+#endif /* _FFCONF */
 
 #endif /* CONF_FATFS_H_INCLUDED */

@@ -154,7 +154,9 @@ src/ASF/common2/components/memory/sd_mmc/sd_mmc.d \
  ../src/ASF/sam0/boards/samd21_xplained_pro/samd21_xplained_pro.h \
  ../src/config/conf_board.h \
  ../src/ASF/common/services/storage/ctrl_access/ctrl_access.h \
- ../src/config/conf_access.h ../src/ASF/sam0/drivers/port/port.h \
+ ../src/config/conf_access.h \
+ ../src/ASF/common2/components/memory/sd_mmc/sd_mmc_mem.h \
+ ../src/ASF/sam0/drivers/port/port.h \
  ../src/ASF/sam0/drivers/system/pinmux/pinmux.h \
  ../src/ASF/sam0/drivers/rtc/rtc_calendar.h ../src/config/conf_clocks.h \
  ../src/ASF/sam0/drivers/system/interrupt/system_interrupt.h \
@@ -500,6 +502,8 @@ e:\programas\atmel\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\all
 ../src/ASF/common/services/storage/ctrl_access/ctrl_access.h:
 
 ../src/config/conf_access.h:
+
+../src/ASF/common2/components/memory/sd_mmc/sd_mmc_mem.h:
 
 ../src/ASF/sam0/drivers/port/port.h:
 

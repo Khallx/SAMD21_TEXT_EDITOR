@@ -1,9 +1,9 @@
 /**
  * \file
  *
- * \brief SAM SPI configuration
+ * \brief SAM D21 SPI configuration
  *
- * Copyright (c) 2013-2018 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2014-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
@@ -39,7 +39,7 @@
 #  define CONF_SPI_H_INCLUDED
 
 #  define CONF_SPI_MASTER_ENABLE     true
-#  define CONF_SPI_SLAVE_ENABLE      true
+#  define CONF_SPI_SLAVE_ENABLE      false
 
 #endif /* CONF_SPI_H_INCLUDED */
 
