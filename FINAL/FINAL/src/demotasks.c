@@ -15,31 +15,22 @@ static xSemaphoreHandle terminal_mutex;
 #define RECEVER_TASK_DELAY	(10 / portTICK_RATE_MS)
 #define WRITER_TASK_DELAY	(10 / portTICK_RATE_MS)
 
-//function prototypes
-/*
-void set_usart_config(int32_t baudrate);
-void parse_command(char * cmd);
-void print_usage();
-void write_buffer(char * string);
-void read_cmd();
-static void receiver(void * param);
-static void writer(void * param);
-void write_string(char * string);
-int mount_fs();
-*/
-//global variables
+
+/* global variables */
 static char g_buffer[BUFFER_SIZE] = {0};
 static const char filename[] = "ed.txt";
+struct usart_module usart_instance;
+struct usart_config usart_conf;
 
 
-//mount a FAT file system from a flash drive connected to EXT1
+/**
+* \brief mount a FAT file system from a flash drive connected to EXT1
+*/
 int mount_fs()
 {
 	FATFS fs;
 	FRESULT res;
 	Ctrl_status status;
-	char test_file_name[] = "0:ola.txt";
-	FIL file_object;
 	
     delay_init();
     irq_initialize_vectors();
@@ -48,6 +39,7 @@ int mount_fs()
     /* Initialize SD MMC stack */
 	sd_mmc_init();
 	
+    /* wait until SD card is ready and plugged in */
 	do {
 		status = sd_mmc_test_unit_ready(0);
 		if (CTRL_FAIL == status) {
@@ -58,6 +50,7 @@ int mount_fs()
 		}
 	} while (CTRL_GOOD != status);
 	
+    /* mount fs */
 	printf("Mounting FATfs...\n");
     memset(&fs, 0, sizeof(FATFS));
     res = f_mount(LUN_ID_SD_MMC_0_MEM, &fs);
@@ -65,32 +58,16 @@ int mount_fs()
         printf("[FAIL] res %d\r\n", res);
         return 1;
     }
-	/*test_file_name[0] = LUN_ID_SD_MMC_0_MEM + '0';
-	res = f_open(&file_object,
-			(char const *)test_file_name,
-			FA_OPEN_ALWAYS | FA_WRITE);
-	if (res != FR_OK) {
-		printf("[FAIL] res %d\r\n", res);
-		return 1;
-	}
-	res = f_puts("ola", &file_object);
-	printf("res: %d\n", res);
-	if(res == EOF)
-	{
-		printf("Error writing to test file...\n");
-		return 1;
-	}
-	res = f_close(&file_object);
-	if(res != FR_OK)
-	{
-		printf("Error closing test file: %d\n", res);
-		return 1;
-	}*/
 	printf("[OK]\r\n");
 	return 0;
 }
 
-
+/**
+* \brief parses command and calls the appropriate function to treat it
+    Available commands:
+        -r            reads the contents of the file
+        -i [message]  writes [message] to the file
+*/
 void parse_command(char * cmd)
 {
 	if(sizeof(cmd) < 3 || cmd[0] != '-')
@@ -113,12 +90,18 @@ void parse_command(char * cmd)
 }
 
 
+/**
+* \brief prints how to use the commands to write and read the file 
+*/
 void print_usage()
 {
 	printf("Invalid command\nUse -r to read file\n-i message to write message\n");
 }
 
 
+/**
+* \brief read the text file 
+*/
 void read_cmd()
 {
 	char line[BUFFER_SIZE];
@@ -135,17 +118,20 @@ void read_cmd()
 	{
 		printf(line);
 	}
-	printf("Closing after reading...\n");
+	printf("Closing after reading...");
 	res = f_close(&fd);
 	if(res != FR_OK)
 	{
-		printf("Error closing: %d", res);
+		printf("\t[ERROR %d]\n", res);
 		return;
 	}
-	printf("[OK]\n");
+	printf("\t[OK]\n");
 	return;
 }
 
+/**
+* \brief writes string to text file
+*/
 void write_string(char * string)
 {
 	FIL fd;
@@ -153,56 +139,58 @@ void write_string(char * string)
 	res = f_open(&fd, filename, FA_OPEN_ALWAYS | FA_WRITE);
 	if(res != FR_OK)
 	{
-		printf("Erro abrindo o arquivo para escrita: %d\n", res);
+		printf("Error opening file reading: %d\n", res);
 		return;
 	}
 	if(f_lseek(&fd, f_size(&fd)) != FR_OK)
 	{
-		printf("Erro no lseek()\n");
+		printf("Error using f_lseek()!\n");
 	}
 	res = f_puts(string, &fd);
 	if(res == EOF)
 	{
 		printf("Error writing to file\n");
 	}
-	printf("Closing after writing...\n");
+	printf("Closing after writing...");
 	res = f_close(&fd);
 	if(res != FR_OK)
 	{
-		printf("Error closing: %d", res);
+		printf("\t[ERROR %d]\n", res);
 		return;
 	}
-	printf("[OK]\n");
+	printf("\t[OK]\n");
 	return;
 }
 
+/** 
+* \brief writes received message to buffer to be acessed by @ref writer() 
+*/
 void write_buffer(char * string)
 {
-	//if message is just space, write nothing
+	/* if message is just space, write nothing */
 	if(sizeof(string) < 4)
 	{
 		printf("Message is too short\n");
 		return;
 	}
-	char * message = string + 3;        //skip the first 3 characters that are not the message ("-i ")
-	//verify if the next character is not terminator
+    /* skip the first 3 characters that are not the message ("-i ") */
+	char * message = string + 3;        
+	/* verify if the next character is not terminator */
 	if(*message == '\0')
 	{
 		printf("Message is invalid\n");
 		return;
 	}
 	printf("Writing to buffer: %s", message);
-	//send message to write buffer (this functions does not write, but send the data to writer task)
+	/* send message to write buffer (this functions does not write, but send the data to writer task) */
 	strcpy(g_buffer, message);
 	return;
 }
 
 
-//GLOBAL SCOPE VARIABLES RESPOSABLE FOR USART CONFIGURATIONS
-struct usart_module usart_instance;
-struct usart_config usart_conf;
-
-//configures USART comunication with \param baudrate bps
+/**
+* \brief configures USART comunication with \param baudrate bps 
+*/
 void set_usart_config(int32_t baudrate)
 {
 	usart_get_config_defaults(&usart_conf);
@@ -217,13 +205,16 @@ void set_usart_config(int32_t baudrate)
 }
 
 
+/**
+* \brief main task that receives data from USART and interprets commands, executing them 
+*/
 void receiver(void * param)
 {
 	char input_buffer[BUFFER_SIZE];
 	for(;;)
 	{
 		xSemaphoreTake(terminal_mutex, portMAX_DELAY);
-		printf("Escreva um comando:\n");
+		printf("Input command:\n");
 		fgets(input_buffer, BUFFER_SIZE, stdin);
 		parse_command(input_buffer);
 		xSemaphoreGive(terminal_mutex);
@@ -232,16 +223,18 @@ void receiver(void * param)
 }
 
 
-
+/**
+* \brief main task that receives data from @ref receiver() and writes it to file 
+*/
 void writer(void * param)
 {
 	for(;;)
 	{
 		xSemaphoreTake(terminal_mutex, portMAX_DELAY);
-		/*check if anything is available on buffer */
+		/* Check if anything is available on buffer */
 		if(*g_buffer == 0)
 		{
-			/* if there is nothing on the buffer, simply exit
+			/* if there is nothing on the buffer, simply exit */
 		}
 		else
 		{
@@ -255,12 +248,12 @@ void writer(void * param)
 }
 
 /**
- * \brief Initialize tasks and resources for demo
+ * \brief Initialize tasks and mutexes
  */
 void demotasks_init(void)
 {
 	int error_return = 0;
-	//configure USART
+
 	terminal_mutex = xSemaphoreCreateMutex();
 	
 	error_return = xTaskCreate(receiver,
@@ -271,7 +264,7 @@ void demotasks_init(void)
 			NULL);
 	if(error_return == errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY)
 	{
-		printf("Erro criando receiver\n");
+		printf("Error creating task: receiver\n");
 	}
 	error_return = xTaskCreate(writer,
 			(const char *) "WR",
@@ -281,6 +274,6 @@ void demotasks_init(void)
 			NULL);
 	if(error_return == errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY)
 	{
-		printf("Erro criando writer\n");
+		printf("Error creating task: writer\n");
 	}
 }
